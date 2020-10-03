@@ -1,0 +1,18 @@
+
+
+  
+<div *ngFor="let item of Channels; let i = index">
+  <mat-card  class="ad-card">
+    <mat-card-header>
+      <mat-card-title>{{ item.ChannelName }}</mat-card-title>
+    </mat-card-header>
+    <img height="140px" width="100%" [src] = "'assets/ChannelLogos/' + item.ChannelID +'.jpg'" />
+    <mat-card-content>
+      
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button (click)="Subscribe(i)" mat-flat-button style="color:#fff;background-color:brown">Subscribe</button>
+      <button style="float:right" mat-flat-button>Rs. {{item.PerDayCostinINR}} per day</button>
+    </mat-card-actions> -->
+  </mat-card>
+</div>

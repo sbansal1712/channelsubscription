@@ -1,0 +1,47 @@
+<div >
+  <span>Total Subscription Cost : Rs. {{TotalCost}}</span>
+</div>
+   
+<div  *ngFor="let item of channels; let i = index">
+    <mat-card  class="ad-card">
+      <mat-card-header>
+        <mat-card-title>{{ item.ChannelName }}</mat-card-title>
+      </mat-card-header>
+      <img height="140px" width="100%" [src] = "'assets/ChannelLogos/' + item.ChannelID +'.jpg'" />
+      <mat-card-content>
+        
+      </mat-card-content>
+      <mat-card-actions>
+        <button *ngIf="item.disabled"  mat-flat-button style="color:#fff;background-color:yellow">Pause</button>
+        <button *ngIf="item.disabled"  mat-flat-button style="color:#fff;background-color:green">Resume</button>
+        <button *ngIf="!item.disabled" (click)="Subscribe(i)" mat-flat-button style="color:#fff;background-color:brown">Subscribe</button>
+        <button style="float:right" mat-flat-button>Rs. {{item.PerDayCostinINR}} per day</button>
+        <button  style="float:right" mat-flat-button>{{item.totalCost}}</button>
+      </mat-card-actions>
+      <mat-form-field appearance="outline" class="Date-Select">
+        <input
+        [min]="minDate" 
+          [(ngModel)]="item.selectedMoments"
+          [rangeSeparator]="'-'"
+          placeholder="Select Date Range"
+          [owlDateTimeTrigger]="dt10"
+          [owlDateTime]="dt10"
+          (dateTimeChange)="assignDate(i)"
+          [selectMode]="'range'"
+          matInput
+          style="
+            text-align: left;
+            font-size: 15px;
+            vertical-align: top;
+    
+             
+            background-size: 18px 18px;
+          "
+        />
+      </mat-form-field>
+      <owl-date-time [pickerType]="'calendar'" #dt10></owl-date-time>
+    </mat-card>
+   
+    
+  </div>
+ 

@@ -1,0 +1,124 @@
+<div class="row" style="width: 100%;">
+  <form style="width:20%; float: right;" [formGroup]="mealForm" (ngSubmit)="submitMeal()">
+    <mat-label>Add Meals</mat-label>
+    
+  
+    <mat-form-field style="margin-top: 5%;"  class="form-control">
+      <mat-label> Name of the Meal: </mat-label>
+      <input matInput formControlName="MealName"/>
+      <div
+        *ngIf="mealSubmitted && mealForm.controls.MealName.errors"
+        class="error"
+      >
+        <div *ngIf="mealForm.controls.MealName.errors.required">
+          Please Enter Meal Name
+        </div>
+      </div>
+    </mat-form-field>
+
+    <mat-form-field style="margin-top: 5%;"  class="form-control">
+      <mat-label> Calories Consumed: </mat-label>
+      <input type="number" matInput formControlName="Calories"/>
+      <div
+        *ngIf="mealSubmitted && mealForm.controls.Calories.errors"
+        class="error"
+      >
+        <div *ngIf="mealForm.controls.Calories.errors.required">
+          Please Enter the calories consumed for this meal
+        </div>
+      </div>
+    </mat-form-field>
+  
+    
+    
+    <input type="submit" value="Add" class="cta" />
+  </form>
+
+  <form style="width:70%;" [formGroup]="submitForm" (ngSubmit)="savedata()">
+    
+    
+  <div class="row">
+    <mat-form-field style="width:30%"  class="form-control">
+      <mat-label> Date: </mat-label>
+      <input type="date"   matInput [(ngModel)]="fromDate" formControlName="Date"/>
+      <div
+        *ngIf="dateSubmitted && submitForm.controls.Date.errors"
+        class="error"
+      >
+        <div *ngIf="submitForm.controls.Date.errors.required">
+          Please Enter Date
+        </div>
+      </div>
+    </mat-form-field>
+    
+    <input type="submit" value="Save"  style="margin-top:2%;float: right;"class="cta" />
+  </div>
+  </form>
+  <div *ngIf="transactions.length != 0">
+  <button *ngIf="!editable"(click)="edit($event)" style="margin-left: 64%;" mat-flat-button>Edit</button>
+  <button *ngIf="editable" (click)="edit($event)" style="margin-left: 64%;" mat-flat-button>Cancel</button>
+</div>
+  
+<table style="margin-top: 1%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Item Column -->
+  
+ 
+  <app-nav></app-nav>
+  <ng-container matColumnDef="item">
+    <th mat-header-cell *matHeaderCellDef> Item </th>
+    <td mat-cell *matCellDef="let transaction" ><input [disabled]="!editable" type="text" matInput [(ngModel)]="transaction.item"/></td>
+    <td mat-footer-cell *matFooterCellDef> Total </td>
+  </ng-container>
+
+  <!-- calorie Column -->
+  <ng-container matColumnDef="calorie">
+    <th mat-header-cell *matHeaderCellDef> calorie </th>
+    <td mat-cell *matCellDef="let transaction"> <input [disabled]="!editable" type="number" matInput [(ngModel)]="transaction.calorie"/>  </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalcalorie()}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+    <td mat-cell *matCellDef="let transaction; let i = index"> <button mat-flat-button (click)="delete(i)"><mat-icon>delete</mat-icon></button></td>
+    <td mat-footer-cell *matFooterCellDef> </td>
+  </ng-container>
+
+  <!-- Item Description Column -->
+  <ng-container matColumnDef="item-description">
+    <th mat-header-cell *matHeaderCellDef> Name of the Meal </th>
+  </ng-container>
+
+  <!-- calorie Description Column -->
+  <ng-container matColumnDef="calorie-description">
+    <th mat-header-cell *matHeaderCellDef> Calories Consumed </th>
+  </ng-container>
+
+  <ng-container matColumnDef="action-description">
+    <th mat-header-cell *matHeaderCellDef> Action </th>
+  </ng-container>
+  <!-- Disclaimer column -->
+  <ng-container matColumnDef="disclaimer">
+    <td mat-footer-cell *matFooterCellDef colspan="3">
+      Please note that the calorie of items displayed are completely and totally made up.
+    </td>
+  </ng-container>
+
+  <!-- The table will render two header rows, one data row per data object, and two footer rows. -->
+ 
+  <tr mat-header-row *matHeaderRowDef="['item-description', 'calorie-description', 'action-description']"
+      class="example-second-header-row">
+  </tr>
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+  
+</table>
+
+
+  
+</div>
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
