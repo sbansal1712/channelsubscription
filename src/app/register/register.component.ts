@@ -35,7 +35,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
-      FullName: ["", Validators.required],
+      FirstName: ["", Validators.required],
+      LastName: ["", Validators.required],
       Username: ["", Validators.required],
       Password: ["", Validators.required],
     });
@@ -64,7 +65,8 @@ export class RegisterComponent implements OnInit {
       const userdetail = {
         Username: this.messageForm.get("Username").value,
         Password: btoa(this.messageForm.get("Password").value),
-        FullName: this.messageForm.get("FullName").value
+        FirstName: this.messageForm.get("FirstName").value,
+        LastName: this.messageForm.get("LastName").value
         
       };
       this.dataService.createNewUser(userdetail).subscribe((data: any) => {
@@ -77,7 +79,7 @@ export class RegisterComponent implements OnInit {
 
         
         //sessionStorage.setItem("username", this.loggedInUser.Username) 
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/browse"]);
         }
         else{
           this.dataService.openErrorSnackBar('Username already exists', '');

@@ -12,11 +12,11 @@
         
       </mat-card-content>
       <mat-card-actions>
-        <button *ngIf="item.disabled"  mat-flat-button style="color:#fff;background-color:yellow">Pause</button>
-        <button *ngIf="item.disabled"  mat-flat-button style="color:#fff;background-color:green">Resume</button>
-        <button *ngIf="!item.disabled" (click)="Subscribe(i)" mat-flat-button style="color:#fff;background-color:brown">Subscribe</button>
+        <button *ngIf="item.Is_Active" (click)=pause(i) mat-flat-button style="color:#fff;background-color:#d99617">Pause</button>
+        <button *ngIf="!item.Is_Active && item.subscribed" (click)="resume(i)" mat-flat-button style="color:#fff;background-color:green;float:right">Resume</button>
+        <button *ngIf="!item.subscribed" (click)="Subscribe(i)" mat-flat-button style="color:#fff;background-color:brown">Subscribe</button>
         <button style="float:right" mat-flat-button>Rs. {{item.PerDayCostinINR}} per day</button>
-        <button  style="float:right" mat-flat-button>{{item.totalCost}}</button>
+        <button  style="float:right" mat-flat-button>Total {{item.totalCost}}</button>
       </mat-card-actions>
       <mat-form-field appearance="outline" class="Date-Select">
         <input

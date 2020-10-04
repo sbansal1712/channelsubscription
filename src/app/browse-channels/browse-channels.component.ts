@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Moment } from "moment";
 import { element } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-browse-channels',
@@ -16,30 +17,40 @@ export class BrowseChannelsComponent implements OnInit {
   TotalCost: any;
   minDate = new Date()
 
-  constructor(private dataService : DataService) { 
+  constructor(private dataService : DataService, private router : Router) { 
  
     
-    console.log(this.dataService.currentUser)
+    
   }
 
   ngOnInit() {
-    this.getAllChannels()
+    if(this.dataService.currentUser == undefined){
+      this.router.navigate(["register"])
+    }
+    else{
+      this.getAllChannels()
+    }
+    
   
   }
   getAllChannels(){
     this.dataService.getAllChannels().subscribe((data => {
       this.channels = data
+      this.TotalCost = 0
       this.channels.forEach((channel) => {
         console.log(channel)
        for(let i in this.dataService.currentUser.Channels){
          if(this.dataService.currentUser.Channels[i].ChannelID == channel.ChannelID){
-           channel.disabled = true;
+           channel.subscribed = true;
+           channel.Is_Active= this.dataService.currentUser.Channels[i].Is_Active
            channel.selectedMoments = this.dataService.currentUser.Channels[i].selectedMoments
            channel.totalCost = this.dataService.currentUser.Channels[i].totalCost
+           this.TotalCost += channel.totalCost
            break;
          }
        }
       })
+
     }))
     
    
@@ -62,12 +73,35 @@ export class BrowseChannelsComponent implements OnInit {
       
     })
   }
+
+  pause(i:number){
+
+    this.channels[i].Is_Active = false;
+    this.dataService.updateChannels({Username : this.dataService.currentUser.Username, Channels : this.channels[i], Is_Active : false}).subscribe((data:any) => {
+      this.channels[i].subscribed = true;
+      this.dataService.currentUser.Channels.push(this.channels[i]) 
+    })   
+  }
+  resume(i:number){
+
+    if(this.channels[i].startDate != undefined){
+       this.channels[i].Is_Active = true;
+    this.dataService.updateChannels({Username : this.dataService.currentUser.Username, Channels : this.channels[i]}).subscribe((data:any) => {
+      this.channels[i].subscribed = true;
+      this.dataService.currentUser.Channels.push(this.channels[i]) 
+    })
+    }
+    else{
+      this.dataService.openErrorSnackBar("Please select subscription period", "");
+    }    
+  }
   Subscribe(i:number){
 
     if(this.channels[i].startDate != undefined){
-       
+       this.channels[i].Is_Active = true;
     this.dataService.updateChannels({Username : this.dataService.currentUser.Username, Channels : this.channels[i]}).subscribe((data:any) => {
-      console.log(data)
+      this.channels[i].subscribed = true;
+      this.dataService.currentUser.Channels.push(this.channels[i]) 
     })
     }
     else{

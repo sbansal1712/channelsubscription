@@ -14,15 +14,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./nav/nav.component";
 import { HomeComponent } from "./home/home.component";
-import { AddNewMealComponent } from "./addNewMeal/addNewMeal.component";
+
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RegisterComponent } from "./register/register.component";
 
 import { AppMaterialModule } from './material-module';
-import { AddNewChannelComponent } from './add-new-channel/add-new-channel.component';
+
 import { BrowseChannelsComponent } from './browse-channels/browse-channels.component';
-import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material/daterangepicker.module';
+
 
 export const MY_NATIVE_FORMATS = {
   fullPickerInput: {
@@ -45,11 +45,11 @@ export const MY_NATIVE_FORMATS = {
     AppComponent,
     NavComponent,
     HomeComponent,
-    AddNewMealComponent,
+
 
     RegisterComponent,
 
-    AddNewChannelComponent,
+
 
     BrowseChannelsComponent,
   ],

@@ -31,11 +31,20 @@
   </form>
 <form style="width: 35%;" [formGroup]="messageForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="form-control">
-    <mat-label>Full Name:</mat-label>
-    <input matInput type="text" formControlName="FullName" />
-    <div *ngIf="registration && messageForm.controls.FullName.errors" class="error">
-      <div *ngIf="messageForm.controls.FullName.errors.required">
-        Please Enter Full Name
+    <mat-label>First Name:</mat-label>
+    <input matInput type="text" formControlName="FirstName" />
+    <div *ngIf="registration && messageForm.controls.FirstName.errors" class="error">
+      <div *ngIf="messageForm.controls.FirstName.errors.required">
+        Please Enter First Name
+      </div>
+    </div>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-control">
+    <mat-label>Last Name:</mat-label>
+    <input matInput type="text" formControlName="LastName" />
+    <div *ngIf="registration && messageForm.controls.LastName.errors" class="error">
+      <div *ngIf="messageForm.controls.LastName.errors.required">
+        Please Enter Last Name
       </div>
     </div>
   </mat-form-field>
